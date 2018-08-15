@@ -2,6 +2,13 @@
 <html>
 <head>
 	<title>Document</title>
+	<style>
+		.header {
+			font-size: 49px;
+
+			color: red;
+		}
+	</style>
 </head>
 <body>
 
@@ -11,17 +18,64 @@
 	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
 	<script type="text/babel">
-		const Header = <h1>Hello World From React</h1>;
 
-		const Clock = function () {
-			const date = new Date();
+		class Counter extends React.Component {
 
-			const thisYear = date.getFullYear();
+			constructor() {
+				super();
 
-			return <h1>CopyRight : {thisYear}</h1>;
+				this.state = {
+					count: 2
+				};
+
+				this.handleAdd = this.handleAdd.bind(this);
+				this.handleSubtract = this.handleSubtract.bind(this);
+			}
+
+			handleSubtract() {
+				this.setState({
+					count: this.state.count - 1
+				})
+			}
+
+			handleAdd() {
+				this.setState({
+					count: this.state.count + 1
+				})
+			}
+
+			render() {
+				let type = '';
+
+				if (this.state.count % 2 === 0) {
+					type = 'even';
+				} else {
+					type = 'odd';
+				}
+
+				return <div>
+					<h6>{this.state.count % 2 === 0 ? 'even' : 'odd'}</h6>
+
+					<h6>{type}</h6>
+
+					<button onClick={this.handleSubtract}>-</button>
+
+					<span style={{ padding: '10px' }}>
+						{this.state.count}
+					</span>
+
+					<button onClick={this.handleAdd}>+</button>
+				</div>;
+			}
 		}
 
-		ReactDOM.render(<Clock />, document.getElementById('app'));
+		const App = function () {
+			return <div>
+				<Counter />
+			</div>;
+		}
+
+		ReactDOM.render(<App />, document.getElementById('app'));
 	</script>
 </body>
 </html>
